@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciando Protocolo de Amor: Ana</title>
+    <!-- Meta tags para prévia no WhatsApp/Redes Sociais -->
+    <meta property="og:title" content="Um pedido especial para Ana">
+    <meta property="og:description" content="Acesse para visualizar uma mensagem importante do sistema.">
+    <meta property="og:type" content="website">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff8fa3;
+            --bg: #0a0a0c;
+            --glass: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 600px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* Terminal Loading Screen */
+        #terminal {
+            font-family: 'Fira Code', monospace;
+            text-align: left;
+            font-size: 14px;
+            color: #00ff41;
+            margin-bottom: 20px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: #00ff41;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Content States */
+        .hidden { display: none; }
+
+        h1 { font-weight: 600; font-size: 2.5em; margin-bottom: 10px; color: var(--primary); }
+        p { font-weight: 300; line-height: 1.6; }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .option-card:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .btn-group {
+            margin-top: 30px;
+            position: relative;
+            height: 60px;
+        }
+
+        button {
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.1em;
+        }
+
+        #btn-sim {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        #btn-nao {
+            background: #444;
+            color: white;
+            position: fixed; /* Mudei para fixed para fugir pela tela ou container */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+
+        /* Hearts Animation */
+        .heart {
+            position: absolute;
+            color: var(--primary);
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="container" id="main-container">
+        <!-- Fase 1: Terminal -->
+        <div id="phase-terminal">
+            <div id="terminal"></div>
+            <span class="cursor"></span>
+        </div>
+
+        <!-- Fase 2: Por que você? -->
+        <div id="phase-options" class="hidden">
+            <h1>Para: Ana</h1>
+            <p>Antes de prosseguirmos, o sistema detectou múltiplos motivos para este pedido. Escolha um para analisar:</p>
+            <div class="options-grid">
+                <div class="option-card" onclick="showReason('Seu sorriso que ilumina o meu código mais sombrio.')">✨ O Sorriso</div>
+                <div class="option-card" onclick="showReason('Sua inteligência que me desafia a ser melhor.')">🧠 A Mente</div>
+                <div class="option-card" onclick="showReason('A forma como você me faz sentir em casa.')">🏠 O Conforto</div>
+                <div class="option-card" onclick="showReason('Cada pequeno detalhe que só você tem.')">🌸 Os Detalhes</div>
+            </div>
+            <p id="reason-text" style="height: 40px; font-style: italic; color: var(--secondary);"></p>
+            <button onclick="nextPhase()" style="background: transparent; border: 1px solid white; color: white; margin-top: 10px;">Continuar para a Pergunta Final</button>
+        </div>
+
+        <!-- Fase 3: O Pedido -->
+        <div id="phase-final" class="hidden">
+            <h1>Ana,</h1>
+            <p>Você aceita ser a variável constante na minha vida e namorar comigo?</p>
+            <div class="btn-group">
+                <button id="btn-sim" onclick="celebrate()">SIM!</button>
+                <button id="btn-nao" onmouseover="foge()">Não</button>
+            </div>
+        </div>
+
+        <!-- Fase 4: Sucesso -->
+        <div id="phase-success" class="hidden">
+            <h1>Compilado com Sucesso! ❤️</h1>
+            <p>Você acabou de fazer um desenvolvedor o homem mais feliz do mundo.</p>
+            <p style="font-size: 0.8em; margin-top: 20px;"><em>Iniciando execução: namoro_eterno.exe</em></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Terminal Animation
+        const logs = [
+            "> Iniciando sistema de reconhecimento emocional...",
+            "> Buscando por: 'Ana'...",
+            "> Carregando memórias compartilhadas [OK]",
+            "> Verificando compatibilidade... [100%]",
+            "> Analisando batimentos cardíacos...",
+            "> Conclusão: Sentimento profundo detectado.",
+            "> Executando pedido_de_namoro.sh..."
+        ];
+
+        let logIdx = 0;
+        function typeLog() {
+            if (logIdx < logs.length) {
+                const line = document.createElement('div');
+                line.textContent = logs[logIdx];
+                document.getElementById('terminal').appendChild(line);
+                logIdx++;
+                setTimeout(typeLog, 800);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('phase-terminal').classList.add('hidden');
+                    document.getElementById('phase-options').classList.remove('hidden');
+                }, 1000);
+            }
+        }
+        typeLog();
+
+        // Options Phase
+        function showReason(text) {
+            document.getElementById('reason-text').textContent = text;
+        }
+
+        function nextPhase() {
+            document.getElementById('phase-options').classList.add('hidden');
+            document.getElementById('phase-final').classList.remove('hidden');
+        }
+
+        // The "NO" button logic
+        function foge() {
+            const btnNao = document.getElementById('btn-nao');
+            const container = document.getElementById('main-container');
+            
+            // Agora ele foge dentro das dimensões do container principal
+            const rect = container.getBoundingClientRect();
+            const maxX = rect.width - btnNao.offsetWidth;
+            const maxY = rect.height - btnNao.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxX) + rect.left;
+            const randomY = Math.floor(Math.random() * maxY) + rect.top;
+
+            btnNao.style.left = randomX + 'px';
+            btnNao.style.top = randomY + 'px';
+        }
+
+        // Celebration
+        function celebrate() {
+            document.getElementById('phase-final').classList.add('hidden');
+            document.getElementById('phase-success').classList.remove('hidden');
+            setInterval(createHeart, 150);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        // Particles Configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#ff4d6d" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ff4d6d",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2
+                }
+            }
+        });
+    </script>
+</body>
+</html>
